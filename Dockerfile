@@ -1,4 +1,4 @@
-FROM python:3.13-slim-bookworm
+FROM python:3.13-slim
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
@@ -33,10 +33,6 @@ ENV PATH="/root/.local/bin:$PATH"
 # Install project dependencies using uv
 RUN uv pip install --no-cache-dir --system .
 
-# Set environment variables (these will be overridden by Smithery.ai config)
-ENV SUPABASE_PROJECT_REF=""
-ENV SUPABASE_DB_PASSWORD=""
-ENV SUPABASE_REGION="us-east-1"
 
 # Expose any ports needed (if applicable)
 # This MCP server communicates via stdin/stdout according to smithery.yaml

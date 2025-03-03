@@ -18,7 +18,7 @@ startCommand:
       supabaseRegion:
         type: string
         description: Region where your Supabase project is hosted.
-        default: "us-east-1"
+        default: "eu-central-1"
         enum:
           - "us-west-1"
           - "us-east-1"
