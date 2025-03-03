@@ -71,7 +71,7 @@ IMPORTANT USAGE GUIDELINES:
 3. NEVER mix READ and WRITE operations in the same query
 4. NEVER use single DDL statements without transaction control
 5. Remember to enable unsafe mode first with live_dangerously('database', True)
-6. For auth operations (primarily creating, updating, deleting users, generating links, etc), prefer using the Auth Admin SDK methods 
+6. For auth operations (primarily creating, updating, deleting users, generating links, etc), prefer using the Auth Admin SDK methods
    instead of direct SQL manipulation to ensure correctness and prevent security issues
 
 TRANSACTION HANDLING:
@@ -229,12 +229,10 @@ Examples:
 2. Create user:
    method: "create_user"
    params: {
-     "attributes": {
-       "email": "user@example.com",
-       "password": "secure-password",
-       "email_confirm": true,
-       "user_metadata": {"name": "John Doe"}
-     }
+     "email": "user@example.com",
+     "password": "secure-password",
+     "email_confirm": true,
+     "user_metadata": {"name": "John Doe"}
    }
 
 3. Generate link:

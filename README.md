@@ -26,10 +26,10 @@
   <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.12%2B-blue.svg" alt="Python 3.12+" /></a>
   <a href="https://github.com/astral-sh/uv"><img src="https://img.shields.io/badge/uv-package%20manager-blueviolet" alt="uv package manager" /></a>
   <a href="https://pepy.tech/project/supabase-mcp-server"><img src="https://static.pepy.tech/badge/supabase-mcp-server" alt="PyPI Downloads" /></a>
+  <a href="https://smithery.ai/badge/@alexander-zuev/supabase-mcp-server"><img src="https://smithery.ai/badge/@alexander-zuev/supabase-mcp-server" alt="Smithery.ai Downloads" /></a>
   <a href="https://modelcontextprotocol.io/introduction"><img src="https://img.shields.io/badge/MCP-Server-orange" alt="MCP Server" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License" /></a>
 </p>
-
 
 A feature-rich MCP server that enables Cursor and Windsurf to safely interact with Supabase databases. It provides tools for database management, SQL query execution, and Supabase Management API access with built-in safety controls.
 
@@ -118,6 +118,8 @@ After installing the package, you'll need to configure your database connection 
  Server is pre-configured to connect to the local Supabase instance using default settings:
 - `Host`: 127.0.0.1:54322
 - `Password`: postgres
+- `API URL` : http://127.0.0.1:54321
+
 
 >💡 As long as you didn't modify the default settings and you want to connect to the local instance, you don't need to set environment variables.
 
@@ -130,6 +132,7 @@ For remote Supabase projects, you need to configure:
 - `SUPABASE_DB_PASSWORD` - Your database password
 - `SUPABASE_REGION` - (Optional) Defaults to `us-east-1`
 - `SUPABASE_ACCESS_TOKEN` - (Optional) For Management API access
+- `SUPABASE_SERVICE_ROLE_KEY` - (Optional) For Auth Admin SDK access
 
 You can get your SUPABASE_PROJECT_REF from your project's dashboard URL:
 - `https://supabase.com/dashboard/project/<supabase-project-ref>`
@@ -169,11 +172,11 @@ You can create project-specific MCP by:
 ```json
 {
 	"mcpServers": {
-	  "filesystem": {
-		"command": "supabase-mcp-server",
+	  "supabase": {
+		"command": "supabase-mcp-server"
 	  }
 	}
-  }
+}
 ```
 
 Alternatively, if you want to configure MCP servers globally (i.e. not for each project), you can use configure connection settings by updating an `.env` file in a global config folder by running the following commands:
@@ -204,6 +207,7 @@ SUPABASE_PROJECT_REF=your-project-ref
 SUPABASE_DB_PASSWORD=your-db-password
 SUPABASE_REGION=us-east-1  # optional, defaults to us-east-1
 SUPABASE_ACCESS_TOKEN=your-access-token  # optional, for management API
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key # optional, for Auth Admin SDK
 ```
 
 Verify the file exists - you should see the values you have just set:
@@ -231,7 +235,8 @@ Windsurf supports de facto standard .json format for MCP Servers configuration. 
           "SUPABASE_PROJECT_REF": "your-project-ref",
           "SUPABASE_DB_PASSWORD": "your-db-password",
           "SUPABASE_REGION": "us-east-1",  // optional, defaults to us-east-1
-          "SUPABASE_ACCESS_TOKEN": "your-access-token"  // optional, for management API
+          "SUPABASE_ACCESS_TOKEN": "your-access-token",  // optional, for management API
+          "SUPABASE_SERVICE_ROLE_KEY": "your-service-role-key"  // optional, for Auth Admin SDK
         }
       }
     }
@@ -280,7 +285,8 @@ Go to Cascade -> Click on the hammer icon -> Configure -> Fill in the configurat
           "SUPABASE_PROJECT_REF": "your-project-ref",
           "SUPABASE_DB_PASSWORD": "your-db-password",
           "SUPABASE_REGION": "us-east-1",  // optional, defaults to us-east-1
-          "SUPABASE_ACCESS_TOKEN": "your-access-token"  // optional, for management API
+          "SUPABASE_ACCESS_TOKEN": "your-access-token",  // optional, for management API
+          "SUPABASE_SERVICE_ROLE_KEY": "your-service-role-key"  // optional, for Auth Admin SDK
         }
       }
     }
@@ -387,6 +393,7 @@ Since v0.3.0 server supports sending arbitrary requests to Supabase Management A
     - Divides API methods into `safe`, `unsafe` and `blocked` categories based on the risk of the operation
     - Allows to switch between safe and unsafe modes dynamically
     - Blocked operations (delete project, delete database) are not allowed regardless of the mode
+  - **Note**: Management API tools only work with remote Supabase instances and are not compatible with local Supabase development setups.
 
 ### Auth Admin tools
 I was planning to add support for Python SDK methods to the MCP server. Upon consideration I decided to only add support for Auth admin methods as I often found myself manually creating test users which was prone to errors and time consuming. Now I can just ask Cursor to create a test user and it will be done seamlessly. Check out the full Auth Admin SDK method docs to know what it can do.
@@ -434,8 +441,12 @@ The Auth Admin SDK provides several key advantages over direct SQL manipulation:
 - 🐍 Support methods and objects available in native Python SDK - ✅ (v0.3.6)
 - 🔍 Stronger SQL query validation (read vs write operations)
 - 📝 Automatic versioning of DDL queries(?)
-- 🪵 Tools / resources to more easily access database, edge functions logs (?) 
+- 🪵 Tools / resources to more easily access database, edge functions logs (?)
 - 👨‍💻 Supabase CLI integration (?)
+- 📖 Radically improved knowledge and tools of api spec
+  - Resources to more easily access and check api spec
+  - Atomic url paths and ops (right now LLM trips more often then not)
+- Better support for local database management
 
 
 

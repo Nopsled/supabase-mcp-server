@@ -104,3 +104,19 @@ class TestSDKClient:
 
         assert error_message in str(excinfo.value)
         assert "Error calling get_user_by_id" in str(excinfo.value)
+
+    async def test_local_url_construction_with_port(self):
+        """Test URL construction for local instance with IP and port"""
+        # Test that the implementation correctly handles a project_ref with a port
+        client = SupabaseSDKClient("127.0.0.1:5432", "my-key")
+        url = client.get_supabase_url()
+        # The implementation should extract just the host and use port 54321
+        assert url == "http://127.0.0.1:54321"
+
+    async def test_local_url_construction_with_default_settings(self):
+        """Test URL construction for local instance with default settings"""
+        # Test with the default project_ref from settings (127.0.0.1:54322)
+        client = SupabaseSDKClient("127.0.0.1:54322", "my-key")
+        url = client.get_supabase_url()
+        # The implementation should extract just the host and use port 54321
+        assert url == "http://127.0.0.1:54321"

@@ -1,6 +1,4 @@
-FROM python:3.13-slim-bookworm as builder
-
-FROM python:3.13-slim
+FROM python:3.13-slim-bookworm
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
@@ -45,6 +43,3 @@ ENV SUPABASE_REGION="us-east-1"
 
 # Set the entrypoint to the command that Smithery expects
 ENTRYPOINT ["uv", "run", "supabase_mcp/main.py"]
-
-# Default command if no arguments are provided
-CMD ["--help"]
