@@ -9,8 +9,6 @@ Pre-release
 6. Changelog is up to date
 7. Tag and release on GitHub
 8. Release is published to PyPI
-9. Update dockerfile
-10. Update .env.example (if necessary)
 
 Post-release
 - Clean install from PyPi works

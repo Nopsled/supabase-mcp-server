@@ -15,44 +15,7 @@ startCommand:
       supabaseDbPassword:
         type: string
         description: The database password of Supabase project you want to connect to.
-      supabaseRegion:
-        type: string
-        description: Region where your Supabase project is hosted.
-        default: "eu-central-1"
-        enum:
-          - "us-west-1"
-          - "us-east-1"
-          - "us-east-2"
-          - "ca-central-1"
-          - "eu-west-1"
-          - "eu-west-2"
-          - "eu-west-3"
-          - "eu-central-1"
-          - "eu-central-2"
-          - "eu-north-1"
-          - "ap-south-1"
-          - "ap-southeast-1"
-          - "ap-northeast-1"
-          - "ap-northeast-2"
-          - "ap-southeast-2"
-          - "sa-east-1"
-      supabaseAccessToken:
-        type: string
-        description: Your Supabase access token (required for Management API tools).
-      supabaseServiceRoleKey:
-        type: string
-        description: Your Supabase service role key (required for Auth Admin SDK tools).
   commandFunction:
     # A function that produces the CLI command to start the MCP on stdio.
     |-
-    (config) => ({
-      command: 'uv',
-      args: ['--directory', '.', 'run', 'supabase_mcp/main.py' ],
-      env: {
-        SUPABASE_PROJECT_REF: config.supabaseProjectRef,
-        SUPABASE_DB_PASSWORD: config.supabaseDbPassword,
-        SUPABASE_REGION: config.supabaseRegion,
-        SUPABASE_ACCESS_TOKEN: config.supabaseAccessToken,
-        SUPABASE_SERVICE_ROLE_KEY: config.supabaseServiceRoleKey
-      }
-    })
+    (config) => ({ command: 'uv', args: ['--directory', '.', 'run', 'supabase_mcp/main.py'], env: { SUPABASE_PROJECT_REF: config.supabaseProjectRef, SUPABASE_DB_PASSWORD: config.supabaseDbPassword } })

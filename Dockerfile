@@ -1,5 +1,6 @@
-FROM python:3.12-slim-bookworm as builder
-FROM python:3.12-slim
+FROM python:3.13-slim-bookworm as builder
+
+FROM python:3.13-slim
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
@@ -37,9 +38,7 @@ RUN uv pip install --no-cache-dir --system .
 # Set environment variables (these will be overridden by Smithery.ai config)
 ENV SUPABASE_PROJECT_REF=""
 ENV SUPABASE_DB_PASSWORD=""
-ENV SUPABASE_REGION="eu-central-1"
-ENV SUPABASE_ACCESS_TOKEN=""
-ENV SUPABASE_SERVICE_ROLE_KEY=""
+ENV SUPABASE_REGION="us-east-1"
 
 # Expose any ports needed (if applicable)
 # This MCP server communicates via stdin/stdout according to smithery.yaml
