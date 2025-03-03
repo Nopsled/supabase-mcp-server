@@ -34,7 +34,7 @@ class SupabaseClient:
         project_ref: str | None = None,
         db_password: str | None = None,
         settings_instance: Settings | None = None,
-        _mode: Literal[DbSafetyLevel.RO, DbSafetyLevel.RW] = DbSafetyLevel.RO,  # Start
+        _mode: Literal[DbSafetyLevel.RO, DbSafetyLevel.RW] = DbSafetyLevel.RW,  # Start in RW mode
     ):
         """Initialize the PostgreSQL connection pool.
 
